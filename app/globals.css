@@ -37,11 +37,11 @@
   }
 
   .hero-carousel {
-    @apply relative sm:px-10 py-5 sm:pt-20 pb-5 max-w-[560px] h-[700px] w-full bg-[#F2F4F7] rounded-[30px] sm:mx-auto;
+    @apply relative sm:px-10 py-5 sm:pt-20 pb-5 max-w-[300px] h-[350px] w-full bg-[#F2F4F7] rounded-[30px] sm:mx-auto;
   }
 
   .carousel {
-    @apply flex flex-col-reverse h-[700px];
+    @apply flex flex-col-reverse h-[350px];
   }
 
   .carousel .control-dots {
@@ -55,6 +55,30 @@
   .carousel .control-dots .dot.selected {
     @apply bg-[#475467] !important;
   }
+
+  .swiper {
+    @apply width: 70%;
+    @apply height: 100%;
+  }
+  
+  .swiper-slide {
+    @apply text-align: center;
+    @apply font-size: 18px;
+    @apply background: #fff;
+  
+    /* Center slide text vertically */
+    @apply display: flex;
+    @apply justify-content: center;
+    @apply align-items: center;
+  }
+  
+  .swiper-slide img {
+    @apply display: block;
+    @apply width: 100%;
+    @apply height: 100%;
+    @apply object-fit: cover;
+  }
+  
 
   .trending-section {
     @apply flex flex-col gap-10 px-6 md:px-20 py-24;
