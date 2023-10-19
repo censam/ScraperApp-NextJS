@@ -1,16 +1,24 @@
 "use client";
+import { scrapeAndStoreProduct } from "@/lib/actions";
+import { scrapeAmazonProduct } from "@/lib/scraper";
+// import { scrapeAmazonProduct } from "@/lib/scraper";
 import { FormEvent, useState } from "react";
-import { URL } from "url";
 
 const isValidAmazonProductLink = (url: string) => {
  try {
   const parsedUrl = new URL(url);
   const hostname = parsedUrl.hostname;
 
-  if (hostname.includes("amazon.") || hostname.endsWith("amazon")) {
+  if (
+   hostname.includes("amazon") ||
+   hostname.includes("amazon.") ||
+   hostname.endsWith("amazon")
+  ) {
    return true;
   }
  } catch (error) {
+  const parsedUrl = new URL(encodeURIComponent(url));
+  console.log(error);
   return false;
  } finally {
  }
@@ -20,12 +28,15 @@ const SeachBar = () => {
  const [promptSearch, setpromptSearch] = useState("");
  const [isLoading, setIsLoading] = useState(false);
 
- const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   const isValidLink = isValidAmazonProductLink(promptSearch);
   if (!isValidLink) return alert("Please Provide a valid Amazon Product URL");
   try {
    setIsLoading(true);
+   //Scrape the product page
+   const product = await scrapeAmazonProduct(promptSearch);
+   console.log("product", product);
   } catch (error) {
    console.log(error);
   } finally {
