@@ -1,5 +1,7 @@
+import Modal from "@/components/Modal";
 import PriceInfoCard from "@/components/PriceInfoCard";
-import { getProductById } from "@/lib/actions";
+import ProductCard from "@/components/ProductCard";
+import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image";
@@ -14,6 +16,8 @@ type Props = {
 const productDetails = async ({ params: { id } }: Props) => {
  const product: Product = await getProductById(id);
  if (!product) redirect("/");
+
+ const similarProducts = await getSimilarProducts(id);
 
  return (
   <div className="product-container">
@@ -134,13 +138,13 @@ const productDetails = async ({ params: { id } }: Props) => {
         borderColor="#cb1278"
        />
        <PriceInfoCard
-        title="Current Price"
+        title="Highest Price"
         iconSrc="/assets/icons/arrow-up.svg"
         value={`${product.currency} ${formatNumber(product.highestPrice)}`}
         borderColor="#2e12cb"
        />
        <PriceInfoCard
-        title="Current Price"
+        title="Lowest Price"
         iconSrc="/assets/icons/arrow-down.svg"
         value={`${product.currency} ${formatNumber(product.lowestPrice)}`}
         borderColor="orange-400"
@@ -149,7 +153,9 @@ const productDetails = async ({ params: { id } }: Props) => {
      </div>
 
      <div>
-      <div>Modal</div>
+      <div>
+       <Modal />
+      </div>
      </div>
     </div>
    </div>
@@ -160,6 +166,21 @@ const productDetails = async ({ params: { id } }: Props) => {
      Buy Now
     </Link>
    </button>
+
+   {similarProducts && similarProducts.length > 0 && (
+    <section className="trending-section">
+     <h2 className="section-text">Similar Products</h2>
+     <div className="flex flex-wrap gap-x-8 gap-y-16">
+      {similarProducts?.map((similarProduct) => (
+       <>
+        <ProductCard key={similarProduct._id} product={similarProduct} />
+       </>
+      ))}
+     </div>
+    </section>
+   )}
+
+   {!similarProducts && <div className="py-4">No Similar Products</div>}
   </div>
  );
 };
