@@ -1,7 +1,7 @@
 // import { PriceHistoryItem, Product } from "@/types";
 
 const Notification = {
-  WELCOME: 'WELCOME', 
+  WELCOME: 'WELCOME',
   CHANGE_OF_STOCK: 'CHANGE_OF_STOCK',
   LOWEST_PRICE: 'LOWEST_PRICE',
   THRESHOLD_MET: 'THRESHOLD_MET',
@@ -14,14 +14,14 @@ export function extractPrice(...elements: any) {
   for (const element of elements) {
     const priceText = element.text().trim();
 
-    if(priceText) {
+    if (priceText) {
       const cleanPrice = priceText.replace(/[^\d.]/g, '');
 
-      let firstPrice; 
+      let firstPrice;
 
       if (cleanPrice) {
         firstPrice = cleanPrice.match(/\d+\.\d{2}/)?.[0];
-      } 
+      }
 
       return firstPrice || cleanPrice;
     }
@@ -116,4 +116,3 @@ export const formatNumber = (num: number = 0) => {
     maximumFractionDigits: 0,
   });
 };
- 
