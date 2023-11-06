@@ -1,4 +1,4 @@
-import { generateEmailBody } from "@/lib/NODEMAILER";
+import { generateEmailBody, sendEmail } from "@/lib/NODEMAILER";
 import Product from "@/lib/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper";
 import {

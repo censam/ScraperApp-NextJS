@@ -72,6 +72,7 @@ export async function getAllProducts() {
     try {
         connectToDB();
         const products = await Product.find({});
+        console.log(products.length);
         if (!products) return null;
 
         return products;
